@@ -16,5 +16,12 @@
     "url": "https://github.com/Karoly-Git/load-track-backend/issues"
   },
   "homepage": "https://github.com/Karoly-Git/load-track-backend#readme",
-  "description": "Backend API for the lorry tracking system, managing vehicle check-ins, loading workflows, check-outs, data persistence, and secure access for real-time status visibility."
+  "description": "Backend API for the lorry tracking system, managing vehicle check-ins, loading workflows, check-outs, data persistence, and secure access for real-time status visibility.",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
 }
