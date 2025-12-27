@@ -21,17 +21,9 @@ const options = {
                 "variables": {
                     "port": {
                         "default": "8000",
-                        "enum": [
-                            "3000",
-                            "8000"
-                        ]
                     }
                 }
             },
-            {
-                "url": "https://lorry-track.example.com/api/v1",
-                "description": "Production server"
-            }
         ],
         "tags": [
             {
