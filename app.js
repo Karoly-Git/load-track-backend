@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 
 const app = express();
-const PORT = process.env.port || 8000;
 
 app.get("/", (req, res) => {
     res.json(
@@ -18,7 +17,4 @@ app.get("/", (req, res) => {
     );
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/`);
-});
-
+module.exports = app;
