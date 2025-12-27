@@ -5,6 +5,8 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 
+const lorryRoutes = require("./src/routes/lorry.routes");
+
 const app = express();
 
 // Helps rate-limit and IP handling
@@ -41,5 +43,7 @@ app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 // Swagger docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use("/lorries", lorryRoutes);
 
 module.exports = app;
