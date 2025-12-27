@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { getAllLorries } = require("../controllers/lorry.controller");
 
-router.get("/all", getAllLorries);
+router.get("/lorries", getAllLorries);
 
 module.exports = router;
