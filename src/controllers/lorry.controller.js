@@ -48,15 +48,18 @@ const getLorryStatusHistory = (req, res) => {
 const addLorry = (req, res) => {
     const { collectionRefNum, regNum, updatedBy } = req.body;
 
-    if (
-        !collectionRefNum ||
-        !regNum ||
-        !updatedBy?.userId ||
-        !updatedBy?.name ||
-        !updatedBy?.role
-    ) {
+    const missingFields = [];
+
+    if (!id) missingFields.push("id");
+    if (!collectionRefNum) missingFields.push("collectionRefNum");
+    if (!regNum) missingFields.push("regNum");
+    if (!updatedBy.userId) missingFields.push("updatedBy.userId");
+    if (!updatedBy.name) missingFields.push("updatedBy.name");
+    if (!updatedBy.role) missingFields.push("updatedBy.role");
+
+    if (missingFields.length) {
         return res.status(400).json({
-            message: "Missing required body fields", // Need to name which one(s) is (are) missing
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
         });
     }
 
@@ -108,7 +111,7 @@ const updateLorryStatus = (req, res) => {
     // Reject request if any required fields are missing
     if (missingFields.length) {
         return res.status(400).json({
-            message: `Missing required fields: '${missingFields.join(", ")}'`,
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
         });
     }
 
@@ -176,7 +179,7 @@ const updateCollectionRefNum = (req, res) => {
     // Reject request if any required params are missing
     if (missingFields.length) {
         return res.status(400).json({
-            message: `Missing required param(s): '${missingFields.join(", ")}'`,
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
         });
     }
 
@@ -208,7 +211,7 @@ const updateRegNum = (req, res) => {
 
     if (missingFields.length) {
         return res.status(400).json({
-            message: `Missing required param(s): '${missingFields.join(", ")}'`,
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
         });
     }
 
