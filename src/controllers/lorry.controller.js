@@ -145,6 +145,10 @@ const updateLorryStatus = (req, res) => {
     // Update the lorry’s current status
     lorry.currentStatus = status;
 
+    if (status === LORRY_STATUS_ENUM.CHECKED_OUT) {
+        lorry.checkedOutAt = timestamp;
+    }
+
     // Append the new status entry to history
     lorry.statusHistory.push({
         status,
