@@ -20,6 +20,8 @@ router.get("/:id/history", getLorryStatusHistory);
 
 // Update
 router.put("/:id/update-status", updateLorryStatus);
+router.put("/:id/update-refnum", () => { return });
+router.put("/:id/update-regnum", () => { return });
 
 // Delete
 router.delete("/:id", deleteLorry);
