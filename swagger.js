@@ -1,466 +1,346 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 
-const PORT = process.env.PORT || 8000;
-
 const options = {
     definition: {
-        "openapi": "3.0.3",
-        "info": {
-            "title": "Lorry Collection Load Track API",
-            "version": "1.0.0",
-            "description": "REST API for tracking lorry collections on a production site. Provides real-time visibility of lorry status, full status history, and role-based access for staff and administrators.",
-            "contact": {
-                "name": "Lorry Track Team",
-                "email": "support@lorrytrack.local"
-            }
+        openapi: "3.0.3",
+        info: {
+            title: "Lorry Load Track API",
+            version: "1.0.0",
+            description:
+                "Backend API for tracking lorry check-ins, loading workflow, and check-outs."
         },
-        "servers": [
+
+        servers: [
             {
-                "url": "http://localhost:{port}/api/v1",
-                "description": "Local development server",
-                "variables": {
-                    "port": {
-                        "default": "8000",
-                    }
-                }
-            },
-        ],
-        "tags": [
-            {
-                "name": "Authentication",
-                "description": "Login and authentication"
-            },
-            {
-                "name": "Lorries",
-                "description": "Lorry tracking and status management"
-            },
-            {
-                "name": "Users",
-                "description": "User and role management (Admin only)"
+                url: "http://localhost:8000",
+                description: "Local development server"
             }
         ],
-        "paths": {
-            "/auth/login": {
-                "post": {
-                    "summary": "User login",
-                    "operationId": "loginUser",
-                    "tags": [
-                        "Authentication"
-                    ],
-                    "requestBody": {
-                        "required": true,
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LoginRequest"
-                                }
-                            }
-                        }
-                    },
-                    "responses": {
-                        "200": {
-                            "description": "Login successful",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/LoginResponse"
-                                    }
-                                }
-                            }
-                        },
-                        "401": {
-                            "description": "Invalid credentials"
-                        }
-                    }
-                }
-            },
+
+        tags: [
+            {
+                name: "Lorries",
+                description: "Lorry tracking and status management"
+            }
+        ],
+
+        paths: {
             "/lorries": {
-                "get": {
-                    "summary": "Get all lorries currently tracked",
-                    "operationId": "getAllLorries",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "List of lorries",
-                            "content": {
+                get: {
+                    tags: ["Lorries"],
+                    summary: "Get all lorries",
+                    responses: {
+                        200: {
+                            description: "List of all lorries",
+                            content: {
                                 "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/Lorry"
-                                        }
+                                    schema: {
+                                        type: "array",
+                                        items: { $ref: "#/components/schemas/Lorry" }
                                     }
                                 }
                             }
+                        },
+                        500: {
+                            description: "Failed to load data"
                         }
                     }
-                },
-                "post": {
-                    "summary": "Check in a new lorry",
-                    "operationId": "checkInLorry",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "requestBody": {
-                        "required": true,
-                        "content": {
+                }
+            },
+
+            "/lorries/add": {
+                post: {
+                    tags: ["Lorries"],
+                    summary: "Add a new lorry",
+                    requestBody: {
+                        required: true,
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LorryCheckInRequest"
+                                schema: {
+                                    $ref: "#/components/schemas/CreateLorryRequest"
                                 }
                             }
                         }
                     },
-                    "responses": {
-                        "201": {
-                            "description": "Lorry checked in successfully",
-                            "content": {
+                    responses: {
+                        201: {
+                            description: "Lorry successfully created",
+                            content: {
                                 "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/Lorry"
-                                    }
+                                    schema: { $ref: "#/components/schemas/Lorry" }
                                 }
                             }
+                        },
+                        400: {
+                            description: "Missing required field(s)"
                         }
                     }
                 }
             },
-            "/lorries/{lorryId}": {
-                "get": {
-                    "summary": "Get lorry by ID",
-                    "operationId": "getLorryById",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "parameters": [
-                        {
-                            "$ref": "#/components/parameters/LorryIdParam"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Lorry details",
-                            "content": {
+
+            "/lorries/{id}": {
+                get: {
+                    tags: ["Lorries"],
+                    summary: "Get lorry by ID",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    responses: {
+                        200: {
+                            description: "Lorry details",
+                            content: {
                                 "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/Lorry"
-                                    }
+                                    schema: { $ref: "#/components/schemas/Lorry" }
                                 }
                             }
                         },
-                        "404": {
-                            "description": "Lorry not found"
-                        }
-                    }
-                },
-                "delete": {
-                    "summary": "Delete a lorry",
-                    "operationId": "deleteLorry",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "parameters": [
-                        {
-                            "$ref": "#/components/parameters/LorryIdParam"
-                        }
-                    ],
-                    "responses": {
-                        "204": {
-                            "description": "Lorry deleted successfully"
-                        },
-                        "403": {
-                            "description": "Forbidden – Admin access required"
-                        },
-                        "404": {
-                            "description": "Lorry not found"
+                        404: {
+                            description: "Lorry not found"
                         }
                     }
                 }
             },
-            "/lorries/{lorryId}/status": {
-                "put": {
-                    "summary": "Update lorry status",
-                    "operationId": "updateLorryStatus",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
+
+            "/lorries/{id}/history": {
+                get: {
+                    tags: ["Lorries"],
+                    summary: "Get lorry status history",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    responses: {
+                        200: {
+                            description: "Status history",
+                            content: {
+                                "application/json": {
+                                    schema: {
+                                        type: "array",
+                                        items: { $ref: "#/components/schemas/StatusHistoryItem" }
+                                    }
+                                }
+                            }
+                        },
+                        404: {
+                            description: "Lorry not found"
                         }
-                    ],
-                    "parameters": [
-                        {
-                            "$ref": "#/components/parameters/LorryIdParam"
-                        }
-                    ],
-                    "requestBody": {
-                        "required": true,
-                        "content": {
+                    }
+                }
+            },
+
+            "/lorries/{id}/update-status": {
+                put: {
+                    tags: ["Lorries"],
+                    summary: "Update lorry status",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    requestBody: {
+                        required: true,
+                        content: {
                             "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UpdateStatusRequest"
+                                schema: {
+                                    $ref: "#/components/schemas/UpdateStatusRequest"
                                 }
                             }
                         }
                     },
-                    "responses": {
-                        "200": {
-                            "description": "Status updated successfully",
-                            "content": {
+                    responses: {
+                        200: {
+                            description: "Lorry status updated",
+                            content: {
                                 "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/Lorry"
-                                    }
+                                    schema: { $ref: "#/components/schemas/Lorry" }
                                 }
                             }
                         },
-                        "400": {
-                            "description": "Invalid status transition"
+                        400: {
+                            description: "Invalid input"
+                        },
+                        404: {
+                            description: "Lorry not found"
+                        },
+                        409: {
+                            description: "Status already applied"
                         }
                     }
                 }
             },
-            "/lorries/{lorryId}/history": {
-                "get": {
-                    "summary": "Get lorry status history",
-                    "operationId": "getLorryHistory",
-                    "tags": [
-                        "Lorries"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "parameters": [
-                        {
-                            "$ref": "#/components/parameters/LorryIdParam"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Status history",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/StatusHistoryItem"
+
+            "/lorries/{id}/update-collection-reference-number": {
+                put: {
+                    tags: ["Lorries"],
+                    summary: "Update collection reference number",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    requestBody: {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    required: ["collectionRefNum"],
+                                    properties: {
+                                        collectionRefNum: {
+                                            type: "string",
+                                            example: "ab456xy"
                                         }
                                     }
                                 }
                             }
                         }
+                    },
+                    responses: {
+                        200: {
+                            description: "Collection reference number updated"
+                        },
+                        404: {
+                            description: "Lorry not found"
+                        }
                     }
                 }
             },
-            "/users": {
-                "get": {
-                    "summary": "Get all users (Admin only)",
-                    "operationId": "getAllUsers",
-                    "tags": [
-                        "Users"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "List of users",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/User"
+
+            "/lorries/{id}/update-registration-number": {
+                put: {
+                    tags: ["Lorries"],
+                    summary: "Update registration number",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    requestBody: {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    required: ["regNum"],
+                                    properties: {
+                                        regNum: {
+                                            type: "string",
+                                            example: "lm12abc"
                                         }
                                     }
                                 }
                             }
+                        }
+                    },
+                    responses: {
+                        200: {
+                            description: "Registration number updated"
+                        },
+                        404: {
+                            description: "Lorry not found"
+                        }
+                    }
+                }
+            },
+
+            "/lorries/{id}/delete": {
+                delete: {
+                    tags: ["Lorries"],
+                    summary: "Delete a lorry",
+                    parameters: [{ $ref: "#/components/parameters/LorryId" }],
+                    responses: {
+                        200: {
+                            description: "Lorry deleted, remaining lorries returned"
+                        },
+                        404: {
+                            description: "Lorry not found"
                         }
                     }
                 }
             }
         },
-        "components": {
-            "securitySchemes": {
-                "bearerAuth": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
+
+        components: {
+            parameters: {
+                LorryId: {
+                    name: "id",
+                    in: "path",
+                    required: true,
+                    description: "Unique lorry identifier",
+                    schema: {
+                        type: "string",
+                        example: "1"
+                    }
                 }
             },
-            "parameters": {
-                "LorryIdParam": {
-                    "name": "lorryId",
-                    "in": "path",
-                    "required": true,
-                    "description": "Unique lorry identifier",
-                    "schema": {
-                        "type": "string"
-                    },
-                    "example": "1"
-                }
-            },
-            "schemas": {
-                "LoginRequest": {
-                    "type": "object",
-                    "required": [
-                        "username",
-                        "password"
-                    ],
-                    "properties": {
-                        "username": {
-                            "type": "string",
-                            "example": "jane.smith"
+
+            schemas: {
+                User: {
+                    type: "object",
+                    properties: {
+                        userId: { type: "string", example: "u-002" },
+                        name: { type: "string", example: "Jane Smith" },
+                        role: { type: "string", example: "Weighbridge Operator" }
+                    }
+                },
+
+                StatusHistoryItem: {
+                    type: "object",
+                    properties: {
+                        status: { $ref: "#/components/schemas/LorryStatus" },
+                        timestamp: {
+                            type: "string",
+                            format: "date-time",
+                            example: "2025-12-27T09:10:00Z"
                         },
-                        "password": {
-                            "type": "string",
-                            "example": "secret123"
+                        updatedBy: { $ref: "#/components/schemas/User" }
+                    }
+                },
+
+                Lorry: {
+                    type: "object",
+                    properties: {
+                        lorryId: { type: "string", example: "1" },
+                        collectionRefNum: { type: "string", example: "vg123sd" },
+                        regNum: { type: "string", example: "pz65pwo" },
+                        checkedInAt: {
+                            type: "string",
+                            format: "date-time"
+                        },
+                        checkedOutAt: {
+                            type: ["string", "null"],
+                            format: "date-time"
+                        },
+                        currentStatus: {
+                            $ref: "#/components/schemas/LorryStatus"
+                        },
+                        statusHistory: {
+                            type: "array",
+                            items: { $ref: "#/components/schemas/StatusHistoryItem" }
                         }
                     }
                 },
-                "LoginResponse": {
-                    "type": "object",
-                    "properties": {
-                        "token": {
-                            "type": "string",
-                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        },
-                        "user": {
-                            "$ref": "#/components/schemas/User"
-                        }
-                    }
-                },
-                "User": {
-                    "type": "object",
-                    "properties": {
-                        "userId": {
-                            "type": "string",
-                            "example": "u-002"
-                        },
-                        "name": {
-                            "type": "string",
-                            "example": "Jane Smith"
-                        },
-                        "role": {
-                            "type": "string",
-                            "example": "Weighbridge Operator"
-                        }
-                    }
-                },
-                "Lorry": {
-                    "type": "object",
-                    "properties": {
-                        "lorryId": {
-                            "type": "string",
-                            "example": "1"
-                        },
-                        "collectionRefNum": {
-                            "type": "string",
-                            "example": "vg123sd"
-                        },
-                        "regNum": {
-                            "type": "string",
-                            "example": "pz65pwo"
-                        },
-                        "checkedInAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2025-12-27T08:40:00.000Z"
-                        },
-                        "checkedOutAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "nullable": true,
-                            "example": null
-                        },
-                        "currentStatus": {
-                            "$ref": "#/components/schemas/LorryStatus"
-                        },
-                        "statusHistory": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/StatusHistoryItem"
-                            }
-                        }
-                    }
-                },
-                "StatusHistoryItem": {
-                    "type": "object",
-                    "properties": {
-                        "status": {
-                            "$ref": "#/components/schemas/LorryStatus"
-                        },
-                        "timestamp": {
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2025-12-27T09:10:00.000Z"
-                        },
-                        "updatedBy": {
-                            "$ref": "#/components/schemas/User"
-                        }
-                    }
-                },
-                "LorryStatus": {
-                    "type": "string",
-                    "enum": [
+
+                LorryStatus: {
+                    type: "string",
+                    enum: [
                         "CHECKED_IN",
-                        "LOADING",
+                        "LOADING_IN_PROGRESS",
                         "LOADED",
                         "CHECKED_OUT"
                     ]
                 },
-                "LorryCheckInRequest": {
-                    "type": "object",
-                    "required": [
-                        "collectionRefNum",
-                        "regNum"
-                    ],
-                    "properties": {
-                        "collectionRefNum": {
-                            "type": "string",
-                            "example": "ab456xy"
+
+                CreateLorryRequest: {
+                    type: "object",
+                    required: ["collectionRefNum", "regNum", "updatedBy"],
+                    properties: {
+                        collectionRefNum: {
+                            type: "string",
+                            example: "ab456xy"
                         },
-                        "regNum": {
-                            "type": "string",
-                            "example": "lm12abc"
+                        regNum: {
+                            type: "string",
+                            example: "lm12abc"
+                        },
+                        updatedBy: {
+                            $ref: "#/components/schemas/User"
                         }
                     }
                 },
-                "UpdateStatusRequest": {
-                    "type": "object",
-                    "required": [
-                        "status"
-                    ],
-                    "properties": {
-                        "status": {
-                            "$ref": "#/components/schemas/LorryStatus"
+
+                UpdateStatusRequest: {
+                    type: "object",
+                    required: ["status", "updatedBy"],
+                    properties: {
+                        status: {
+                            $ref: "#/components/schemas/LorryStatus"
+                        },
+                        updatedBy: {
+                            $ref: "#/components/schemas/User"
                         }
                     }
                 }
@@ -468,8 +348,8 @@ const options = {
         }
     },
 
-    // Scan files that contain @openapi blocks
-    apis: [],
+    // No JSDoc scanning yet
+    apis: []
 };
 
 module.exports = swaggerJSDoc(options);

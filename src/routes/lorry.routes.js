@@ -13,7 +13,7 @@ const {
 } = require("../controllers/lorry.controller");
 
 // Creata
-router.post("/", addLorry);
+router.post("/add", addLorry);
 
 // Read
 router.get("/", getAllLorries);
