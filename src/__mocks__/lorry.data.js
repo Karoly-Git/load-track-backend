@@ -4,7 +4,7 @@ const lorryTrackData = [
     {
         lorryId: "1",
         refNum: "vg123sd",
-        registration: "pz65pwo",
+        regNum: "pz65pwo",
 
         checkedInAt: "2025-12-27T08:40:00Z",
         checkedOutAt: null,
@@ -26,7 +26,7 @@ const lorryTrackData = [
     {
         lorryId: "2",
         refNum: "ab456xy",
-        registration: "lm12abc",
+        regNum: "lm12abc",
 
         checkedInAt: "2025-12-27T08:55:00Z",
         checkedOutAt: null,
@@ -57,7 +57,7 @@ const lorryTrackData = [
     {
         lorryId: "3",
         refNum: "cd789ef",
-        registration: "qr34def",
+        regNum: "qr34def",
 
         checkedInAt: "2025-12-27T07:50:00Z",
         checkedOutAt: null,
@@ -97,7 +97,7 @@ const lorryTrackData = [
     {
         lorryId: "4",
         refNum: "gh012ij",
-        registration: "st56ghi",
+        regNum: "st56ghi",
 
         checkedInAt: "2025-12-27T06:45:00Z",
         checkedOutAt: "2025-12-27T08:30:00Z",

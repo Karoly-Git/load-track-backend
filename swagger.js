@@ -385,7 +385,7 @@ const options = {
                             "type": "string",
                             "example": "vg123sd"
                         },
-                        "registration": {
+                        "regNum": {
                             "type": "string",
                             "example": "pz65pwo"
                         },
@@ -440,14 +440,14 @@ const options = {
                     "type": "object",
                     "required": [
                         "refNum",
-                        "registration"
+                        "regNum"
                     ],
                     "properties": {
                         "refNum": {
                             "type": "string",
                             "example": "ab456xy"
                         },
-                        "registration": {
+                        "regNum": {
                             "type": "string",
                             "example": "lm12abc"
                         }
