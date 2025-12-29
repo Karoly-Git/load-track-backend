@@ -1,11 +1,4 @@
-const LORRY_STATUS_ENUM = {
-    CHECKED_IN: "CHECKED_IN",
-    LOADING: "LOADING_IN_PROGRESS",
-    LOADED: "LOADED",
-    CHECKED_OUT: "CHECKED_OUT"
-};
-
-const MATERIAL_NAME_ENUM = {
+const MATERIAL_NAMES_ENUM = {
     // Paper
     MIXED_PAPER_GR1: "Mixed paper G1",
     MIXED_PAPER_GR2: "Mixed paper G2",
@@ -25,4 +18,4 @@ const MATERIAL_NAME_ENUM = {
     GLASS: "Glass"
 };
 
-module.exports = { LORRY_STATUS_ENUM, MATERIAL_NAME_ENUM };
+module.exports = MATERIAL_NAMES_ENUM;

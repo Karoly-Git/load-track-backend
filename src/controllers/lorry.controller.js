@@ -1,4 +1,4 @@
-const LORRY_STATUS_ENUM = require("../__mocks__/lorry-status.enum");
+const LORRY_STATUS_ENUM = require("../constants/lorry-statuses");
 const data = require("../__mocks__/lorry.data");
 
 const getAllLorries = (req, res) => {

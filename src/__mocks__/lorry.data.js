@@ -1,4 +1,5 @@
-const LORRY_STATUS_ENUM = require("./lorry-status.enum");
+const LORRY_STATUSES_ENUM = require("../constants/lorry-statuses");
+const MATERIAL_NAMES_ENUM = require("../constants/material-names");
 
 const lorryTrackData = [
     {
@@ -8,11 +9,11 @@ const lorryTrackData = [
 
         checkedInAt: "2025-12-27T08:40:00Z",
         checkedOutAt: null,
-        currentStatus: LORRY_STATUS_ENUM.CHECKED_IN,
+        currentStatus: LORRY_STATUSES_ENUM.CHECKED_IN,
 
         statusHistory: [
             {
-                status: LORRY_STATUS_ENUM.CHECKED_IN,
+                status: LORRY_STATUSES_ENUM.CHECKED_IN,
                 timestamp: "2025-12-27T08:40:00Z",
                 updatedBy: {
                     userId: "u-002",
@@ -30,11 +31,11 @@ const lorryTrackData = [
 
         checkedInAt: "2025-12-27T08:55:00Z",
         checkedOutAt: null,
-        currentStatus: LORRY_STATUS_ENUM.LOADING,
+        currentStatus: LORRY_STATUSES_ENUM.LOADING,
 
         statusHistory: [
             {
-                status: LORRY_STATUS_ENUM.CHECKED_IN,
+                status: LORRY_STATUSES_ENUM.CHECKED_IN,
                 timestamp: "2025-12-27T08:55:00Z",
                 updatedBy: {
                     userId: "u-002",
@@ -43,7 +44,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.LOADING,
+                status: LORRY_STATUSES_ENUM.LOADING,
                 timestamp: "2025-12-27T09:10:00Z",
                 updatedBy: {
                     userId: "u-003",
@@ -61,11 +62,11 @@ const lorryTrackData = [
 
         checkedInAt: "2025-12-27T07:50:00Z",
         checkedOutAt: null,
-        currentStatus: LORRY_STATUS_ENUM.LOADED,
+        currentStatus: LORRY_STATUSES_ENUM.LOADED,
 
         statusHistory: [
             {
-                status: LORRY_STATUS_ENUM.CHECKED_IN,
+                status: LORRY_STATUSES_ENUM.CHECKED_IN,
                 timestamp: "2025-12-27T07:50:00Z",
                 updatedBy: {
                     userId: "u-002",
@@ -74,7 +75,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.LOADING,
+                status: LORRY_STATUSES_ENUM.LOADING,
                 timestamp: "2025-12-27T08:05:00Z",
                 updatedBy: {
                     userId: "u-003",
@@ -83,7 +84,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.LOADED,
+                status: LORRY_STATUSES_ENUM.LOADED,
                 timestamp: "2025-12-27T09:00:00Z",
                 updatedBy: {
                     userId: "u-003",
@@ -101,11 +102,11 @@ const lorryTrackData = [
 
         checkedInAt: "2025-12-27T06:45:00Z",
         checkedOutAt: "2025-12-27T08:30:00Z",
-        currentStatus: LORRY_STATUS_ENUM.CHECKED_OUT,
+        currentStatus: LORRY_STATUSES_ENUM.CHECKED_OUT,
 
         statusHistory: [
             {
-                status: LORRY_STATUS_ENUM.CHECKED_IN,
+                status: LORRY_STATUSES_ENUM.CHECKED_IN,
                 timestamp: "2025-12-27T06:45:00Z",
                 updatedBy: {
                     userId: "u-002",
@@ -114,7 +115,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.LOADING,
+                status: LORRY_STATUSES_ENUM.LOADING,
                 timestamp: "2025-12-27T07:00:00Z",
                 updatedBy: {
                     userId: "u-004",
@@ -123,7 +124,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.LOADED,
+                status: LORRY_STATUSES_ENUM.LOADED,
                 timestamp: "2025-12-27T07:55:00Z",
                 updatedBy: {
                     userId: "u-004",
@@ -132,7 +133,7 @@ const lorryTrackData = [
                 }
             },
             {
-                status: LORRY_STATUS_ENUM.CHECKED_OUT,
+                status: LORRY_STATUSES_ENUM.CHECKED_OUT,
                 timestamp: "2025-12-27T08:30:00Z",
                 updatedBy: {
                     userId: "u-002",
