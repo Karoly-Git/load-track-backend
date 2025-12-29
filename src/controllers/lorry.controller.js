@@ -1,50 +1,7 @@
 const LORRY_STATUS_ENUM = require("../constants/lorry-statuses");
 const data = require("../__mocks__/lorry.data");
 
-const getAllLorries = (req, res) => {
-    try {
-        res.status(200).json(data);
-    } catch (err) {
-        res.status(500).json({ message: "Failed to load data" });
-    }
-};
-
-const getLorryById = (req, res) => {
-    const { id } = req.params;
-
-    if (!id) {
-        return res.status(400).json({ message: "Missing lorry id" });
-    }
-
-    const lorry = data.find(el => el.lorryId === id);
-
-    if (!lorry) {
-        return res.status(404).json({
-            message: `Lorry with id '${id}' not found`,
-        });
-    }
-
-    res.status(200).json(lorry);
-};
-
-const getLorryStatusHistory = (req, res) => {
-    const { id } = req.params;
-
-    if (!id) {
-        return res.status(400).json({ message: "Missing lorry id" });
-    }
-
-    const lorry = data.find(el => el.lorryId === id);
-
-    if (!lorry) {
-        return res.status(404).json({
-            message: `Lorry with id '${id}' not found`,
-        });
-    }
-
-    res.status(200).json(lorry.statusHistory);
-};
-
+// Add new collection
 const addLorry = (req, res) => {
     const { regNum, materialName, customerName, collectionRefNum, updatedBy, comment } = req.body;
 
@@ -99,16 +56,166 @@ const addLorry = (req, res) => {
     };
 
     data.push(newLorry);
-    return res.status(201).json(newLorry);
+    return res.status(200).json({ message: "Lorry added successfully.", newLorry });
 };
 
+// Get all collections
+const getAllLorries = (req, res) => {
+    try {
+        res.status(200).json(data);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to load data" });
+    }
+};
 
+// Get a collection by ID
+const getLorryById = (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: "Missing lorry id" });
+    }
+
+    const lorry = data.find(el => el.lorryId === id);
+
+    if (!lorry) {
+        return res.status(404).json({
+            message: `Lorry with id '${id}' not found`,
+        });
+    }
+
+    res.status(200).json(lorry);
+};
+
+// Get collection status history by ID
+const getLorryStatusHistory = (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: "Missing lorry id" });
+    }
+
+    const lorry = data.find(el => el.lorryId === id);
+
+    if (!lorry) {
+        return res.status(404).json({
+            message: `Lorry with id '${id}' not found`,
+        });
+    }
+
+    res.status(200).json(lorry.statusHistory);
+};
+
+// Update lorry registration number
+const updateRegNum = (req, res) => {
+    const { id } = req.params;
+    const { regNum } = req.body;
+
+    const missingFields = [];
+
+    if (!id) missingFields.push("id");
+    if (!regNum) missingFields.push("regNum");
+
+    if (missingFields.length) {
+        return res.status(400).json({
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
+        });
+    }
+
+    const lorry = data.find(el => el.lorryId === id);
+
+    if (!lorry) {
+        return res.status(404).json({
+            message: `Lorry with id '${id}' not found`,
+        });
+    }
+
+    lorry.regNum = regNum;
+
+    return res.status(200).json({ message: "Lorry registration number updated successfully.", lorry });
+};
+
+// Update the name of the collected material
+const updateMaterialName = (req, res) => {
+    const { id } = req.params;
+    const { materialName } = req.body;
+
+    if (!materialName) {
+        return res.status(400).json({ message: "materialName is required." });
+    }
+
+    const lorry = data.find(l => l.lorryId === id);
+    if (!lorry) {
+        return res.status(404).json({ message: `Lorry with id ${id} not found.` });
+    }
+
+    lorry.materialName = materialName;
+    return res.status(200).json({ message: "Material name updated successfully.", lorry });
+};
+
+// Update the customer name of the collection
+const updateCustomerName = (req, res) => {
+    const { id } = req.params;
+    const { customerName } = req.body;
+
+    if (!customerName) {
+        return res.status(400).json({ message: "customerName is required." });
+    }
+
+    const lorry = data.find(l => l.lorryId === id);
+    if (!lorry) {
+        return res.status(404).json({ message: `Lorry with id ${id} not found.` });
+    }
+
+    lorry.customerName = customerName;
+    return res.status(200).json({ message: "Customer name updated successfully.", lorry });
+};
+
+// Update collection referene number
+const updateCollectionRefNum = (req, res) => {
+    // Read lorry's id and collection's reference number from URL params
+    const { id } = req.params;
+    const { collectionRefNum } = req.body;
+
+
+    // Collect any missing required params
+    const missingFields = [];
+
+    // Validate presence of required params
+    if (!id) missingFields.push("id");
+    if (!collectionRefNum) missingFields.push("collectionRefNum");
+
+    // Reject request if any required params are missing
+    if (missingFields.length) {
+        return res.status(400).json({
+            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
+        });
+    }
+
+    // Look up the lorry by id
+    const lorry = data.find(el => el.lorryId === id);
+
+    // Reject if the lorry does not exist
+    if (!lorry) {
+        return res.status(404).json({
+            message: `Lorry with id '${id}' not found`,
+        });
+    }
+
+    // Update the collection’s reference number
+    lorry.collectionRefNum = collectionRefNum;
+
+    // Return the updated lorry record
+    return res.status(200).json({ message: "Collection reference number updated successfully.", lorry });
+};
+
+// Update collection status
 const updateLorryStatus = (req, res) => {
     // Read lorry id from URL params
     const { id } = req.params;
 
     // Read status update payload from request body
-    const { status, updatedBy } = req.body;
+    const { status, updatedBy, comment } = req.body;
 
     // Collect names of any missing required fields
     const missingFields = [];
@@ -117,8 +224,8 @@ const updateLorryStatus = (req, res) => {
     if (!id) missingFields.push("id");
     if (!status) missingFields.push("status");
     if (!updatedBy?.userId) missingFields.push("updatedBy.userId");
-    if (!updatedBy?.name) missingFields.push("updatedBy.name");
-    if (!updatedBy?.role) missingFields.push("updatedBy.role");
+    //if (!updatedBy?.name) missingFields.push("updatedBy.name");
+    //if (!updatedBy?.role) missingFields.push("updatedBy.role");
 
     // Reject request if any required fields are missing
     if (missingFields.length) {
@@ -164,83 +271,28 @@ const updateLorryStatus = (req, res) => {
         lorry.checkedOutAt = timestamp;
     }
 
+
     // Append the new status entry to history
     lorry.statusHistory.push({
         status,
         timestamp,
         updatedBy,
+        comments: comment
+            ? [
+                {
+                    userId: updatedBy.userId,
+                    text: comment,
+                    timestamp,
+                },
+            ]
+            : [],
     });
 
     // Return the updated lorry record
-    return res.status(200).json(lorry);
+    return res.status(200).json({ message: "Lorry status updated successfully.", lorry });
 };
 
-const updateCollectionRefNum = (req, res) => {
-    // Read lorry's id and collection's reference number from URL params
-    const { id } = req.params;
-    const { collectionRefNum } = req.body;
-
-
-    // Collect any missing required params
-    const missingFields = [];
-
-    // Validate presence of required params
-    if (!id) missingFields.push("id");
-    if (!collectionRefNum) missingFields.push("collectionRefNum");
-
-    // Reject request if any required params are missing
-    if (missingFields.length) {
-        return res.status(400).json({
-            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
-        });
-    }
-
-    // Look up the lorry by id
-    const lorry = data.find(el => el.lorryId === id);
-
-    // Reject if the lorry does not exist
-    if (!lorry) {
-        return res.status(404).json({
-            message: `Lorry with id '${id}' not found`,
-        });
-    }
-
-    // Update the collection’s reference number
-    lorry.collectionRefNum = collectionRefNum;
-
-    // Return the updated lorry record
-    return res.status(200).json(lorry);
-};
-
-const updateRegNum = (req, res) => {
-    const { id } = req.params;
-    const { regNum } = req.body;
-
-    const missingFields = [];
-
-    if (!id) missingFields.push("id");
-    if (!regNum) missingFields.push("regNum");
-
-    if (missingFields.length) {
-        return res.status(400).json({
-            message: `Missing required field(s) or param(s): '${missingFields.join(", ")}'`,
-        });
-    }
-
-    const lorry = data.find(el => el.lorryId === id);
-
-    if (!lorry) {
-        return res.status(404).json({
-            message: `Lorry with id '${id}' not found`,
-        });
-    }
-
-    lorry.regNum = regNum;
-
-    return res.status(200).json(lorry);
-};
-
-
+// Delete collection
 const deleteLorry = (req, res) => {
     const { id } = req.params;
 
@@ -261,17 +313,18 @@ const deleteLorry = (req, res) => {
     const deletedLorry = data.splice(index, 1)[0];
     const newData = data.filter(el => el.lorryId !== id);
 
-    //res.status(200).json(deletedLorry);
-    res.status(200).json(newData);
+    return res.status(200).json({ message: "Lorry delted successfully.", deletedLorry });
 };
 
 module.exports = {
+    addLorry,
     getAllLorries,
     getLorryById,
     getLorryStatusHistory,
-    addLorry,
-    updateLorryStatus,
-    updateCollectionRefNum,
     updateRegNum,
-    deleteLorry,
+    updateMaterialName,
+    updateCustomerName,
+    updateCollectionRefNum,
+    updateLorryStatus,
+    deleteLorry
 };

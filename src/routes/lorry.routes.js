@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const {
+    addLorry,
     getAllLorries,
     getLorryById,
     getLorryStatusHistory,
-    addLorry,
-    updateLorryStatus,
-    updateCollectionRefNum,
     updateRegNum,
+    updateMaterialName,
+    updateCustomerName,
+    updateCollectionRefNum,
+    updateLorryStatus,
     deleteLorry
 } = require("../controllers/lorry.controller");
 
@@ -21,9 +23,11 @@ router.get("/:id", getLorryById);
 router.get("/:id/history", getLorryStatusHistory);
 
 // Update
-router.put("/:id/update-status", updateLorryStatus);
-router.put("/:id/update-collection-reference-number", updateCollectionRefNum);
 router.put("/:id/update-registration-number", updateRegNum);
+router.put("/:id/update-material-name", updateMaterialName);
+router.put("/:id/update-customer-name", updateCustomerName);
+router.put("/:id/update-collection-reference-number", updateCollectionRefNum);
+router.put("/:id/update-status", updateLorryStatus);
 
 // Delete
 router.delete("/:id/delete", deleteLorry);
