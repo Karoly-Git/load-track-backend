@@ -307,7 +307,7 @@ const updateLorryStatus = (req, res) => {
     });
 
     // Return the updated lorry record
-    return res.status(200).json({ message: "Lorry status updated successfully.", lorry });
+    return res.status(200).json(lorry);
 };
 
 /**
