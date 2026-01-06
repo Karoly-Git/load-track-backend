@@ -19,10 +19,22 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-001",
-                        userId: "u-002",
+                        id: "c-1-001",
+                        userId: "wb-002",
                         text: "Lorry arrived on time.",
                         timestamp: "2025-12-27T08:41:00Z"
+                    },
+                    {
+                        id: "c-1-002",
+                        userId: "flt-003",
+                        text: "I am FLT driver and Lorry driver punched me",
+                        timestamp: "2025-12-27T08:55:00Z"
+                    },
+                    {
+                        id: "c-1-003",
+                        userId: "sv-004",
+                        text: "I am Supervisor and punched the Lorry driver",
+                        timestamp: "2025-12-27T08:55:00Z"
                     }
                 ]
             }
@@ -45,7 +57,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-002",
+                        id: "c-2-001",
                         userId: "u-002",
                         text: "Checked in at weighbridge.",
                         timestamp: "2025-12-27T08:56:00Z"
@@ -58,7 +70,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-003" },
                 comments: [
                     {
-                        id: "c-003",
+                        id: "c-2-002",
                         userId: "u-003",
                         text: "Started loading PET clear.",
                         timestamp: "2025-12-27T09:11:00Z"
@@ -84,7 +96,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-004",
+                        id: "c-3-001",
                         userId: "u-002",
                         text: "Checked in at weighbridge.",
                         timestamp: "2025-12-27T07:51:00Z"
@@ -97,7 +109,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-003" },
                 comments: [
                     {
-                        id: "c-005",
+                        id: "c-3-002",
                         userId: "u-003",
                         text: "Loading HDPE natural.",
                         timestamp: "2025-12-27T08:06:00Z"
@@ -110,7 +122,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-003" },
                 comments: [
                     {
-                        id: "c-006",
+                        id: "c-3-003",
                         userId: "u-003",
                         text: "Loading completed.",
                         timestamp: "2025-12-27T09:01:00Z"
@@ -136,7 +148,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-007",
+                        id: "c-4-001",
                         userId: "u-002",
                         text: "Glass lorry checked in.",
                         timestamp: "2025-12-27T06:46:00Z"
@@ -149,7 +161,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-004" },
                 comments: [
                     {
-                        id: "c-008",
+                        id: "c-4-002",
                         userId: "u-004",
                         text: "Loading glass containers.",
                         timestamp: "2025-12-27T07:01:00Z"
@@ -162,7 +174,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-004" },
                 comments: [
                     {
-                        id: "c-009",
+                        id: "c-4-003",
                         userId: "u-004",
                         text: "Glass fully loaded.",
                         timestamp: "2025-12-27T07:56:00Z"
@@ -175,7 +187,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-010",
+                        id: "c-4-004",
                         userId: "u-002",
                         text: "Lorry checked out.",
                         timestamp: "2025-12-27T08:31:00Z"
@@ -201,7 +213,7 @@ const lorryTrackData = [
                 updatedBy: { userId: "u-002" },
                 comments: [
                     {
-                        id: "c-011",
+                        id: "c-5-001",
                         userId: "u-002",
                         text: "Metal lorry checked in.",
                         timestamp: "2025-12-27T09:21:00Z"
@@ -228,8 +240,7 @@ const lorryTrackData = [
                 comments: []
             }
         ]
-    },
-
+    }
 ];
 
 module.exports = lorryTrackData;
