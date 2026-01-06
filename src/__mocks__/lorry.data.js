@@ -98,7 +98,7 @@ const lorryTrackData = [
                     {
                         id: "c-3-001",
                         userId: "u-002",
-                        text: "Checked in at weighbridge.",
+                        text: "I have checked in the lorry.",
                         timestamp: "2025-12-27T07:51:00Z"
                     }
                 ]
@@ -111,7 +111,7 @@ const lorryTrackData = [
                     {
                         id: "c-3-002",
                         userId: "u-003",
-                        text: "Loading HDPE natural.",
+                        text: "I have started loading the lorry.",
                         timestamp: "2025-12-27T08:06:00Z"
                     }
                 ]
@@ -124,7 +124,7 @@ const lorryTrackData = [
                     {
                         id: "c-3-003",
                         userId: "u-003",
-                        text: "Loading completed.",
+                        text: "I have completed loading the lorry.",
                         timestamp: "2025-12-27T09:01:00Z"
                     }
                 ]
