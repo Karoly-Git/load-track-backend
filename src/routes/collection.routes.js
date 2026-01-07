@@ -24,10 +24,10 @@ router.get("/:collectionId", getCollectionById);
 router.get("/:collectionId/history", getCollectionStatusHistory);
 
 // Update collection fields
-router.patch("/:collectionId/registration-number", updateLorryRegNum);
 router.patch("/:collectionId/material-name", updateMaterialName);
 router.patch("/:collectionId/customer-name", updateCustomerName);
 router.patch("/:collectionId/reference-number", updateCollectionRefNum);
+router.patch("/:collectionId/registration-number", updateLorryRegNum);
 router.patch("/:collectionId/status", updateCollectionStatus);
 
 // Delete collection

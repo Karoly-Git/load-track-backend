@@ -56,10 +56,11 @@ const validateRequiredFields = (req, res, requiredKeys = []) => {
 export const addCollection = (req, res) => {
     if (
         validateRequiredFields(req, res, [
-            "materialName",
-            "customerName",
-            "collectionRefNum",
-            "updatedByUserId"
+            "materialName",         // required body field
+            "customerName",         // required body field
+            "collectionRefNum",    // required body field   
+            "updatedByUserId",    // required body field
+            //"comment"           // optional body field
         ])
     ) return;
 
@@ -178,16 +179,20 @@ export const updateLorryRegNum = updateCollectionField("lorryRegNum");
  * Update collection status
  */
 export const updateCollectionStatus = (req, res) => {
+    const { collectionId } = req.params;
+    const { status, updatedByUserId, comment } = req.body;
+
+    //console.log(collectionId, "|", status, "|", updatedByUserId, "|", comment);
+
     if (
         validateRequiredFields(req, res, [
-            "collectionId",
-            "status",
-            "updatedByUserId"
+            "collectionId",         // required param
+            "status",               // required body field
+            "updatedByUserId",      // required body field
+            //"comment"             // optional body field   
         ])
     ) return;
 
-    const { collectionId } = req.params;
-    const { status, updatedByUserId, comment } = req.body;
 
     if (!isValidStatus(status)) {
         return res.status(400).json({ message: "Invalid status value" });
