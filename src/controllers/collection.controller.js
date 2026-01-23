@@ -212,8 +212,6 @@ export const updateCollectionStatus = (req, res) => {
         });
     }
 
-    console.log(newStatus);
-
     collection.currentStatus = newStatus;
 
     switch (newStatus) {
