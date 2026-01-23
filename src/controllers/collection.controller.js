@@ -61,6 +61,7 @@ export const addCollection = (req, res) => {
             "collectionRefNum",    // required body field   
             "updatedByUserId",    // required body field
             //"comment"           // optional body field
+            "timestamp"
         ])
     ) return;
 
@@ -70,10 +71,10 @@ export const addCollection = (req, res) => {
         collectionRefNum,
         lorryRegNum,
         updatedByUserId,
-        comment
+        comment,
+        timestamp
     } = req.body;
 
-    const timestamp = new Date().toISOString();
     const newId = String(data.length + 1) + new Date().getTime();
 
     const newCollection = {
