@@ -137,10 +137,10 @@ export const getSingleComment = (req, res) => {
  * Update a comment
  */
 export const updateComment = (req, res) => {
-    if (validateRequiredFields(req, res, ["commentId", "text"])) return;
+    if (validateRequiredFields(req, res, ["commentId", "text", "timestamp"])) return;
 
     const { commentId } = req.params;
-    const { text } = req.body;
+    const { text, timestamp } = req.body;
 
     const result = findCommentById(commentId);
     if (!result) {
@@ -150,7 +150,7 @@ export const updateComment = (req, res) => {
     }
 
     result.comment.text = text;
-    result.comment.timestamp = new Date().toISOString();
+    result.comment.timestamp = timestamp;
 
     return res.status(200).json(result.comment);
 };
